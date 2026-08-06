@@ -1,8 +1,6 @@
-import 'dart:async';
-
-import 'package:chattr/auth/auth_service.dart';
 import 'package:chattr/components/my_button.dart';
 import 'package:chattr/components/my_textfield.dart';
+import 'package:chattr/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {

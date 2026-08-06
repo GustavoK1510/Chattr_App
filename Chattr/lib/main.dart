@@ -1,9 +1,8 @@
-import 'package:chattr/auth/auth_gate.dart';
 import 'package:chattr/firebase_options.dart';
+import 'package:chattr/services/auth/auth_gate.dart';
 import 'package:chattr/themes/light_mode.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'auth/login_or_register.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,6 +1,5 @@
-import 'package:chattr/auth/auth_service.dart';
+import 'package:chattr/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
-
 import '../components/my_button.dart';
 import '../components/my_textfield.dart';
 
