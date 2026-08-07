@@ -1,6 +1,8 @@
 import 'package:chattr/pages/settings_page.dart';
 import 'package:chattr/services/auth/auth_service.dart';
+import 'package:chattr/themes/theme_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MyDrawer extends StatelessWidget {
 
@@ -9,10 +11,12 @@ class MyDrawer extends StatelessWidget {
     auth.signOut();
   }
 
-  const MyDrawer({super.key});
+  MyDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<ThemeProvider>(context, listen: false).isDarkMode;
+
     return Drawer(
       backgroundColor: Theme.of(context).colorScheme.surface,
       child: Column(
@@ -33,7 +37,12 @@ class MyDrawer extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 25.0),
                 child: ListTile(
-                  title: const Text("H O M E"),
+                  title: Text(
+                    "H O M E",
+                    style: TextStyle(
+                      color: isDarkMode ? Colors.white : Colors.black,
+                    ),
+                  ),
                   leading: const Icon(Icons.home),
                   onTap: () {
                     Navigator.pop(context);
@@ -44,7 +53,12 @@ class MyDrawer extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 25.0),
                 child: ListTile(
-                  title: const Text("S E T T I N G S"),
+                  title: Text(
+                    "S E T T I N G S",
+                    style: TextStyle(
+                    color: isDarkMode ? Colors.white : Colors.black,
+                    ),
+                  ),
                   leading: const Icon(Icons.settings),
                   onTap: () {
                     Navigator.pop(context);
@@ -59,7 +73,12 @@ class MyDrawer extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 25.0, bottom: 25.0),
             child: ListTile(
-              title: const Text("L O G O U T"),
+              title: Text(
+                "L O G O U T",
+                style: TextStyle(
+                  color: isDarkMode ? Colors.white : Colors.black,
+                ),
+              ),
               leading: const Icon(Icons.logout),
               onTap: logout,
             ),

@@ -16,12 +16,12 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
-        title: Text("Home"),
+        title: Text("H O M E"),
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.grey,
         elevation: 0,
       ),
-      drawer: const MyDrawer(),
+      drawer: MyDrawer(),
       body: _buildUserList(),
     );
   }

@@ -22,7 +22,12 @@ class MyButton extends StatelessWidget {
         padding: const EdgeInsets.all(25.0),
         margin: const EdgeInsets.symmetric(horizontal: 25.0),
         child: Center(
-          child: Text(text),
+          child: Text(
+            text,
+            style: TextStyle(
+              fontWeight: FontWeight(700),
+            ),
+          ),
         ),
       ),
     );
