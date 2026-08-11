@@ -1,6 +1,5 @@
 import 'package:chattr/firebase_options.dart';
 import 'package:chattr/services/auth/auth_gate.dart';
-import 'package:chattr/themes/light_mode.dart';
 import 'package:chattr/themes/theme_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

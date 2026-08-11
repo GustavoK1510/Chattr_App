@@ -62,7 +62,7 @@ class SettingsPage extends StatelessWidget {
                       color: Colors.red,
                     ),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadiusGeometry.circular(12)
+                      borderRadius: BorderRadiusGeometry.circular(12),
                     )
                   ),
                   child: Text(
