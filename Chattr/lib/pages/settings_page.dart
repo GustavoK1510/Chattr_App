@@ -16,24 +16,66 @@ class SettingsPage extends StatelessWidget {
         foregroundColor: Colors.grey,
         elevation: 0,
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.secondary,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        margin: const EdgeInsets.all(25),
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text("Dark Mode"),
+      body: Column(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.secondary,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            margin: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text("Dark Mode"),
 
-            CupertinoSwitch(
-              value: Provider.of<ThemeProvider>(context, listen: false).isDarkMode,
-              onChanged: (value) => Provider.of<ThemeProvider>(context, listen: false).toggleTheme(),
-            )
-          ],
-        ),
+                CupertinoSwitch(
+                  value: Provider.of<ThemeProvider>(context, listen: false).isDarkMode,
+                  onChanged: (value) => Provider.of<ThemeProvider>(context, listen: false).toggleTheme(),
+                )
+              ],
+            ),
+          ),
+
+          Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.secondary,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            margin: const EdgeInsets.all(20),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  "Delete Account",
+                  style: TextStyle(
+                    color: Colors.red,
+                  ),
+                ),
+
+                TextButton(
+                  onPressed: () => {},
+                  style: TextButton.styleFrom(
+                    side: const BorderSide(
+                      color: Colors.red,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadiusGeometry.circular(12)
+                    )
+                  ),
+                  child: Text(
+                    "Delete",
+                    style: TextStyle(
+                      color: Colors.red,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
