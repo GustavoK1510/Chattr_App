@@ -1,3 +1,4 @@
+import 'package:chattr/pages/addUsers_page.dart';
 import 'package:chattr/pages/settings_page.dart';
 import 'package:chattr/services/auth/auth_service.dart';
 import 'package:chattr/themes/theme_provider.dart';
@@ -54,9 +55,27 @@ class MyDrawer extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 25.0),
                 child: ListTile(
                   title: Text(
-                    "S E T T I N G S",
+                    "A D D  F R I E N D S",
                     style: TextStyle(
                     color: isDarkMode ? Colors.white : Colors.black,
+                    ),
+                  ),
+                  leading: const Icon(Icons.add),
+                  onTap: () {
+                    Navigator.pop(context);
+
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const AddUsersPage()));
+                  },
+                ),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.only(left: 25.0),
+                child: ListTile(
+                  title: Text(
+                    "S E T T I N G S",
+                    style: TextStyle(
+                      color: isDarkMode ? Colors.white : Colors.black,
                     ),
                   ),
                   leading: const Icon(Icons.settings),
