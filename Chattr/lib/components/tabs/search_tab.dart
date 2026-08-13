@@ -76,7 +76,7 @@ class _SearchTabState extends State<SearchTab> {
                 ),
               ),
 
-              subtitle: const Text("Add this user as a friend!"),
+              subtitle: Text(_requestSent ? "Add this user as a friend!" : "Already requested!"),
 
               trailing: ElevatedButton(
                 onPressed: _requestSent ? null : () async {
@@ -87,7 +87,7 @@ class _SearchTabState extends State<SearchTab> {
                   });
                 },
                 child: Text(
-                    _requestSent ? "Requested" : "Add Friend"),
+                    _requestSent ? "Add Friend" : "Requested"),
               ),
             ),
           ),

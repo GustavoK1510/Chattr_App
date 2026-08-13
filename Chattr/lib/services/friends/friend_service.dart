@@ -114,4 +114,57 @@ class FriendService {
           "status": Status.declined.name,
         });
   }
+
+  // Get all of User's friends
+  Stream<QuerySnapshot> getFriends() {
+    return _firestore
+        .collection("friends")
+        .where("users", arrayContains: _auth.currentUser!.uid)
+        .snapshots();
+  }
+
+  // Get a specific User
+  Future<DocumentSnapshot> getUserById(String uid) {
+    return _firestore
+        .collection("Users")
+        .doc(uid)
+        .get();
+  }
+
+  // Get the user information from a friend
+  Stream<List<Map<String, dynamic>>> getFriendUsers() {
+
+    // Listen to the friend collection
+    return _firestore
+        .collection("friends")
+        .where("users", arrayContains: _auth.currentUser!.uid)
+        .snapshots()
+        .asyncMap((snapshot) async { // Convert each friendship into a User
+      final List<Map<String, dynamic>> friends = [];
+
+      // Loop through the friendships
+      for (final doc in snapshot.docs) {
+        final users = List<String>.from(doc["users"]);
+
+        // Remove the User's UID
+        final friendUID = users.firstWhere(
+              (id) => id != _auth.currentUser!.uid,
+        );
+
+        // Load the friend's User document
+        final userDoc = await _firestore
+            .collection("Users")
+            .doc(friendUID)
+            .get();
+
+        // Add it to the list
+        if (userDoc.exists) {
+          friends.add(userDoc.data()!);
+        }
+      }
+
+      // Return the list
+      return friends;
+    });
+  }
 }
