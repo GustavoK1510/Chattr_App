@@ -11,32 +11,12 @@ class FriendService {
     return await _firestore
         .collection("Users")
         .where("email", isEqualTo: email)
+        .where("email", isNotEqualTo: _auth.currentUser!.email!)
         .get();
   }
 
   // Send a friend request
   Future<void> sendFriendRequest(String receiverID, receiverEmail) async {
-
-    // Query to see if there are requests each way
-    final results = await Future.wait([
-        _firestore
-        .collection("friend_requests")
-        .where("senderID", isEqualTo: _auth.currentUser!.uid)
-        .where("receiverID", isEqualTo: receiverID)
-        .where("status", isEqualTo: Status.pending.name)
-        .get(),
-        _firestore
-        .collection("friend_requests")
-        .where("senderID", isEqualTo: receiverID)
-        .where("receiverID", isEqualTo: _auth.currentUser!.uid)
-        .where("status", isEqualTo: Status.pending.name)
-        .get(),
-    ]);
-
-    // Verify them
-    if(results[0].docs.isNotEmpty || results[1].docs.isNotEmpty) {
-      return;
-    }
 
     // Create a new request
     FriendRequest newFriendRequest = FriendRequest(
@@ -54,6 +34,28 @@ class FriendService {
       .add(newFriendRequest.toMap());
   }
 
+  // Check for pending requests
+  Future<bool> hasPendingRequest(String receiverID) async {
+
+    // Query to see if there are requests each way
+    final results = await Future.wait([
+      _firestore
+          .collection("friend_requests")
+          .where("senderID", isEqualTo: _auth.currentUser!.uid)
+          .where("receiverID", isEqualTo: receiverID)
+          .where("status", isEqualTo: Status.pending.name)
+          .get(),
+      _firestore
+          .collection("friend_requests")
+          .where("senderID", isEqualTo: receiverID)
+          .where("receiverID", isEqualTo: _auth.currentUser!.uid)
+          .where("status", isEqualTo: Status.pending.name)
+          .get(),
+    ]);
+
+    // Verify them
+     return results[0].docs.isNotEmpty || results[1].docs.isNotEmpty;
+  }
 
   // Get sent requests
   Stream<QuerySnapshot> getSentRequests() {
@@ -105,7 +107,7 @@ class FriendService {
 
   // Decline a request
   Future<void> declineFriendRequest(String requestID) async {
-    _firestore
+    await _firestore
         .collection("friend_requests")
         .doc(requestID)
         .update({
