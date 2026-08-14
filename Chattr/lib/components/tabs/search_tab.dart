@@ -76,18 +76,17 @@ class _SearchTabState extends State<SearchTab> {
                 ),
               ),
 
-              subtitle: Text(_requestSent ? "Add this user as a friend!" : "Already requested!"),
+              subtitle: Text(_requestSent ? "Already requested!" : "Add this user as a friend!"),
 
               trailing: ElevatedButton(
                 onPressed: _requestSent ? null : () async {
                   await _friendService.sendFriendRequest(_foundUser!["uid"], _foundUser!["email"]);
-
                   setState(() {
                     _requestSent = true;
                   });
                 },
                 child: Text(
-                    _requestSent ? "Add Friend" : "Requested"),
+                    _requestSent ? "Requested" : "Add Friend"),
               ),
             ),
           ),

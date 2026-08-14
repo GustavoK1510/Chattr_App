@@ -1,4 +1,6 @@
+import 'package:chattr/components/tabs/received_tab.dart';
 import 'package:chattr/components/tabs/search_tab.dart';
+import 'package:chattr/components/tabs/sent_tab.dart';
 import 'package:flutter/material.dart';
 
 class AddUsersPage extends StatelessWidget {
@@ -26,8 +28,8 @@ class AddUsersPage extends StatelessWidget {
         body: const TabBarView(
           children: [
             SearchTab(),
-            //ReceivedTab(),
-            //SentTab(),
+            ReceivedTab(),
+            SentTab(),
           ],
         ),
       ),

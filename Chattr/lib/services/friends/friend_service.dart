@@ -37,7 +37,7 @@ class FriendService {
   // Check for pending requests
   Future<bool> hasPendingRequest(String receiverID) async {
 
-    // Query to see if there are requests each way
+    // Query to see if there are requests each way or already friends
     final results = await Future.wait([
       _firestore
           .collection("friend_requests")
@@ -51,10 +51,14 @@ class FriendService {
           .where("receiverID", isEqualTo: _auth.currentUser!.uid)
           .where("status", isEqualTo: Status.pending.name)
           .get(),
+      _firestore
+          .collection("friends")
+          .where("users", arrayContains: _auth.currentUser!.uid)
+          .get(),
     ]);
 
     // Verify them
-     return results[0].docs.isNotEmpty || results[1].docs.isNotEmpty;
+     return results.any((result) => result.docs.isNotEmpty);
   }
 
   // Get sent requests

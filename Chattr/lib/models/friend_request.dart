@@ -29,7 +29,7 @@ class FriendRequest {
       'senderEmail': senderEmail,
       'receiverID': receiverID,
       'receiverEmail': receiverEmail,
-      'status': status,
+      'status': status.name,
       'timestamp': timestamp,
     };
   }
