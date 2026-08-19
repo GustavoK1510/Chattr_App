@@ -171,4 +171,40 @@ class FriendService {
       return friends;
     });
   }
+
+  // Delete a friendship or friend request
+  Future<void> deleteUserFriendData() async {
+    final userID = _auth.currentUser!.uid;
+
+    // Get requests involving the user
+    final requests = await Future.wait([
+      _firestore
+          .collection("friend_requests")
+          .where("senderID", isEqualTo: userID)
+          .get(),
+
+      _firestore
+          .collection("friend_requests")
+          .where("receiverID", isEqualTo: userID)
+          .get(),
+    ]);
+
+    // Delete the requests
+    for (final result in requests) {
+      for (final doc in result.docs) {
+        await doc.reference.delete();
+      }
+    }
+
+    // Get friendships involving the user
+    final friendships = await _firestore
+        .collection("friends")
+        .where("users", arrayContains: userID)
+        .get();
+
+    // Delete the friendships
+    for (final doc in friendships.docs) {
+      await doc.reference.delete();
+    }
+  }
 }

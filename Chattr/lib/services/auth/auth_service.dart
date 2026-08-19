@@ -1,9 +1,11 @@
+import 'package:chattr/services/friends/friend_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final _friendService = FriendService();
 
   // Get the current user data
   User? getCurrentUser() {
@@ -58,7 +60,7 @@ class AuthService {
   }
 
   // Delete the logged in User
-  Future<void> deleteUser() async {
+  Future<void> deleteUser(String password) async {
     try {
       final User? user = _auth.currentUser;
 
@@ -66,11 +68,27 @@ class AuthService {
         throw Exception("No authenticated user.");
       }
 
+      // Create an AuthCredential with the user data
+      final credential = EmailAuthProvider.credential(
+          email: user.email!,
+          password: password
+      );
+
+      // Reauthenticate the user
+      await user.reauthenticateWithCredential(credential);
+
+      // Delete the user's friendships and friend requests
+      await _friendService.deleteUserFriendData();
+
       // Delete the user's Firestore document
       await _firestore.collection("Users").doc(user.uid).delete();
 
       // Delete the Firebase Authentication account
       await user.delete();
+
+      // Sign the user out to guarantee a state change
+      await _auth.signOut();
+
     } on FirebaseAuthException catch (e) {
       throw Exception(e.code);
     } on FirebaseException catch (e) {
